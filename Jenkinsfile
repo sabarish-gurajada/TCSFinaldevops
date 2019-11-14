@@ -3,9 +3,9 @@ pipeline {
 label 'master'
 }
 
-IMAGE = 'tcsdevopsfinal'
-VERSION = '1.0'
-PROJECTID= 'tcsdevopsathon'
+IMAGE = "tcsdevopsfinal"
+VERSION = "1.0"
+PROJECTID= "tcsdevopsathon"
 
     stages {
 	stage('App build'){
@@ -26,9 +26,9 @@ PROJECTID= 'tcsdevopsathon'
          stage('Image TAG') {
             steps {
                echo 'Image Tagging started'
-               docker tag ${IMAGE} gcr.io/${PROJECTID}/${IMAGE}:${VERSION}
+               docker tag ${IMAGE} gcr.io/${PROJECTID}:${IMAGE}:${VERSION}
                echo 'Image tagging is completed'
-            }
+                   }
         }
 
         stage('Image Push') {
