@@ -26,7 +26,7 @@ PROJECTID= "tcsdevopsathon"
          stage('Image TAG') {
             steps {
                echo 'Image Tagging started'
-               docker tag ${IMAGE} gcr.io/${PROJECTID}:${IMAGE}:${VERSION}
+               docker tag ${IMAGE} gcr.io:${PROJECTID}:${IMAGE}:${VERSION}
                echo 'Image tagging is completed'
                    }
         }
