@@ -3,10 +3,12 @@ pipeline {
 label 'master'
 }
 
+environment
+	{
 IMAGE = "tcsdevopsfinal"
 VERSION = "1.0"
 PROJECTID= "tcsdevopsathon"
-
+	}
     stages {
 	stage('App build'){
 		steps{
