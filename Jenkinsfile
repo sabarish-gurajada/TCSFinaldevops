@@ -11,14 +11,14 @@ PROJECTID= "tcsdevopsathon"
 	stage('App build'){
 		steps{
             echo 'starting App build'
-		npm run build
+		sh "npm run build"
         echo 'App build completed'
 		}
 	}
         stage('Image Build') {
             steps {
                 echo 'Image Build started'
-                docker build -t ${IMAGE} .
+                sh "docker build -t ${IMAGE} ."
                 echo 'docker build completed'
                
             }
@@ -26,7 +26,7 @@ PROJECTID= "tcsdevopsathon"
          stage('Image TAG') {
             steps {
                echo 'Image Tagging started'
-               docker tag ${IMAGE} gcr.io:${PROJECTID}:${IMAGE}:${VERSION}
+              sh "docker tag ${IMAGE} gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
                echo 'Image tagging is completed'
                    }
         }
@@ -34,14 +34,14 @@ PROJECTID= "tcsdevopsathon"
         stage('Image Push') {
             steps {
                 echo 'Pushing Image started.'
-                docker push gcr.io/${PROJECTID}/${IMAGE}:${VERSION}
+               sh "docker push gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
                 push completed
             }
         }
         stage('Image Pull') {
             steps {
                 echo 'Pulling....'
-                docker pull gcr.io/${PROJECTID}/${IMAGE}:${VERSION}
+                sh "docker pull gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
                  echo 'pull completed'
             }
 	
@@ -49,8 +49,8 @@ PROJECTID= "tcsdevopsathon"
 	stage('Image Deploy'){
 	steps {
                 echo 'Deploying Image'
-                kubectl create -f deployment.yaml
-                kubectl create -f service.yaml
+               sh "kubectl create -f deployment.yaml"
+                sh "kubectl create -f service.yaml"
                 echo 'Deploying has been completed'
             }
 	}
