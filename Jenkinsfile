@@ -1,55 +1,36 @@
-pipeline {
-    agent {
-label 'master'
-}
+node {
+    def app
 
-environment
-	{
-IMAGE = "tcsdevopsfinal"
-VERSION = "1.0"
-PROJECTID= "tcsdevopsathon"
-TAG= "gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
-	}
-    stages {
-	
-        stage('Image Build') {
-            steps {
-                echo 'Image Build started'
-	     sh   "docker build . -t ${IMAGE}"
-                echo 'docker build completed'
-               
-            }
-        }
-         stage('Image TAG') {
-            steps {
-               echo 'Image Tagging started'
-		    sh "docker tag ${IMAGE} ${TAG} "
-               echo 'Image tagging is completed'
-                   }
-        }
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
 
-        stage('Image Push') {
-            steps {
-                echo 'Pushing Image started.'
-		    sh "docker push ${TAG}"
-                push completed
-            }
+        checkout scm
+    }
+
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+
+        app = docker.build("getintodevops/hellonode")
+    }
+
+    stage('Test image') {
+        /* Ideally, we would run a test framework against our image.
+         * For this example, we're using a Volkswagen-type approach ;-) */
+
+        app.inside {
+            sh 'echo "Tests passed"'
         }
-        stage('Image Pull') {
-            steps {
-                echo 'Pulling....'
-		    sh "docker pull ${TAG}"
-                 echo 'pull completed'
-            }
-	
+    }
+
+    stage('Push image') {
+        /* Finally, we'll push the image with two tags:
+         * First, the incremental build number from Jenkins
+         * Second, the 'latest' tag.
+         * Pushing multiple tags is cheap, as all the layers are reused. */
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
-	stage('Image Deploy'){
-	steps {
-                echo 'Deploying Image'
-               sh "kubectl create -f deployment.yaml"
-                sh "kubectl create -f service.yaml"
-                echo 'Deploying has been completed'
-            }
-	}
     }
 }
