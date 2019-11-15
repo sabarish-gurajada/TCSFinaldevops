@@ -10,13 +10,7 @@ VERSION = "1.0"
 PROJECTID= "tcsdevopsathon"
 	}
     stages {
-	stage('App build'){
-		steps{
-            echo 'starting App build'
-		sh "npm run build"
-        echo 'App build completed'
-		}
-	}
+	
         stage('Image Build') {
             steps {
                 echo 'Image Build started'
