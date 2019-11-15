@@ -1,56 +1,16 @@
 pipeline {
-    agent {
-label 'master'
-}
-	
-		
-environment
-	{
-IMAGE = "tcsdevopsfinal"
-VERSION = "1.0"
-PROJECTID= "tcsdevopsathon"
-TAG= "gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
-	}
-    stages {
-	
-        stage('Image Build') {
-            steps {
-                echo 'Image Build started'
-	     sh   "gcloud"
-                echo 'docker build completed'
-               
-            }
-        }
-         stage('Image TAG') {
-            steps {
-               echo 'Image Tagging started'
-		    sh "docker tag ${IMAGE} ${TAG} "
-               echo 'Image tagging is completed'
-                   }
-        }
+   agent any
 
-        stage('Image Push') {
-            steps {
-                echo 'Pushing Image started.'
-		    sh "docker push ${TAG}"
-                push completed
+stages {
+    stage('Run gcloud') {
+
+        steps {
+            withEnv(['GCLOUD_PATH=/var/jenkins_home/google-cloud-sdk/bin']) {
+                sh '$GCLOUD_PATH/gcloud --version'
             }
-        }
-        stage('Image Pull') {
-            steps {
-                echo 'Pulling....'
-		    sh "docker pull ${TAG}"
-                 echo 'pull completed'
-            }
-	
-        }
-	stage('Image Deploy'){
-	steps {
-                echo 'Deploying Image'
-               sh "kubectl create -f deployment.yaml"
-                sh "kubectl create -f service.yaml"
-                echo 'Deploying has been completed'
-            }
-	}
-    }
+
+
+         }
+      }
+   }
 }
