@@ -15,6 +15,7 @@ TAG= "gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
         stage('Image Build') {
             steps {
                 echo 'Image Build started'
+		docker version
                 docker build -t ${IMAGE} .
                 echo 'docker build completed'
                
