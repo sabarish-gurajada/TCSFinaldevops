@@ -8,13 +8,14 @@ environment
 IMAGE = "tcsdevopsfinal"
 VERSION = "1.0"
 PROJECTID= "tcsdevopsathon"
+TAG= "gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
 	}
     stages {
 	
         stage('Image Build') {
             steps {
                 echo 'Image Build started'
-                sh "docker build -t ${IMAGE} ."
+                docker build -t ${IMAGE} .
                 echo 'docker build completed'
                
             }
@@ -22,7 +23,7 @@ PROJECTID= "tcsdevopsathon"
          stage('Image TAG') {
             steps {
                echo 'Image Tagging started'
-              sh "docker tag ${IMAGE} gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
+		    sh "docker tag ${IMAGE} ${TAG} "
                echo 'Image tagging is completed'
                    }
         }
@@ -30,14 +31,14 @@ PROJECTID= "tcsdevopsathon"
         stage('Image Push') {
             steps {
                 echo 'Pushing Image started.'
-               sh "docker push gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
+		    sh "docker push ${TAG}"
                 push completed
             }
         }
         stage('Image Pull') {
             steps {
                 echo 'Pulling....'
-                sh "docker pull gcr.io/${PROJECTID}/${IMAGE}:${VERSION}"
+		    sh "docker pull ${TAG}"
                  echo 'pull completed'
             }
 	
