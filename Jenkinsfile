@@ -10,8 +10,9 @@ label 'master'
     stages {
         stage('Configure') {
             steps {
-                sh """ cd /home/sabarishgurajada_cloud/jenkins"""
-                sh """dd.sh"""
+                dir("${env.WORKSPACE}/aQA"){
+    sh "pwd"
+}
             }
         }
     }
