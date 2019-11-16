@@ -10,7 +10,7 @@ label 'master'
     stages {
         stage('Configure') {
             steps {
-                dir("${env.WORKSPACE}/aQA"){
+                dir("${env.WORKSPACE}"){
     sh "pwd"
 }
             }
