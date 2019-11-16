@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'X86-64-MULTI'
+    label 'master'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '60'))
