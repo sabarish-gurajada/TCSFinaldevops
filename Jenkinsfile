@@ -3,7 +3,7 @@ pipeline {
     label 'master'
   }
       containers:
-        -{"name": "docker", "image":"docker:latest"
+        - {"name": "docker", "image":"docker:latest"
                   "tty":true, "env":[{"name":"DOCKER_HOST", "value":"tcp://localhost:2375"}]}
                  
  stages
