@@ -10,16 +10,8 @@ label 'master'
     stages {
         stage('Configure') {
             steps {
-                echo 'Create parameters file'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo "Build docker image"
-                script {
-                    dockerImage = docker.build("${env.DOCKER_IMAGE_TAG}",  '-f ./Dockerfile .')
-                    pipelineContext.dockerImage = dockerImage
-                }
+                sh """ cd /home/sabarishgurajada_cloud/jenkins"""
+                sh """dd.sh"""
             }
         }
     }
