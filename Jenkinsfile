@@ -7,7 +7,7 @@ def my_agent =
                   container:
                       - {"name": "docker", "image":"docker:latest", "tty":true, "env":[{"name":"DOCKER_HOST", "value":"tcp://localhost:2375"}]}
                   '''
-           PodTemplate( label: my_agent, yaml: pod_yaml )
+           podTemplate( label: my_agent, yaml: pod_yaml )
 {
             node(my_agent)
             {
