@@ -8,7 +8,7 @@ stage('Run') {
     steps {
         echo "Run docker image"
         script {
-            docker --version
+            docker images
         }
     }
 }
