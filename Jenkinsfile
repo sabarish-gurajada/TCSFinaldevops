@@ -12,6 +12,7 @@ label 'master'
             steps {
                 dir("${env.WORKSPACE}"){
     sh "pwd"
+                    gcloud auth login
 }
             }
         }
