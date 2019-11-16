@@ -7,10 +7,8 @@ def my_agent =
                   container:
                       - {"name": "docker", "image":"docker:latest", "tty":true, "env":[{"name":"DOCKER_HOST", "value":"tcp://localhost:2375"}]}
                   '''
-           podTemplate( label: my_agent, yaml: pod_yaml )
-{
-            node(my_agent)
-            {
+           podTemplate( label: my_agent, yaml: pod_yaml ){
+            node(my_agent){
                 stage('Test')
                 {
                  container('docker')
