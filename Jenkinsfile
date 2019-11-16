@@ -6,6 +6,8 @@ def po_yaml = '''
     container:
         - {"name": "docker", "image":"docker:latest", "tty":true, "env":[{"name":"DOCKER_HOST", "value":"tcp://localhost:2375"}]}
     '''
+node(my_agent)
+{
     stage('Test')
     {
      container('docker')
@@ -15,5 +17,4 @@ def po_yaml = '''
         """
       }
     }
-  
-
+}
