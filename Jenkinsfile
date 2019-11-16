@@ -8,7 +8,7 @@ stage('Run') {
     steps {
         echo "Run docker image"
         script {
-            docker images
+                              dockerImage = docker.build("${env.DOCKER_IMAGE_TAG}",  '-f ./Dockerfile .')
         }
     }
 }
